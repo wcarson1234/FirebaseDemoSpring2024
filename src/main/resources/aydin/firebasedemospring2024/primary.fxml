@@ -16,7 +16,7 @@
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
             <children>
-            <Label text="CSC 325 student: check out the console window for the output messages..." />
+            <Label text="CSC325-SW Engineering Student: check out the console window for the output messages..." />
                 <TextField fx:id="nameTextField" promptText="name" />
                 <TextField fx:id="ageTextField" promptText="age" />
                 <HBox alignment="TOP_CENTER" prefHeight="55.0" prefWidth="518.0" spacing="10.0">
