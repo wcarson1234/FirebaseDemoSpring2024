@@ -5,8 +5,7 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.UserRecord;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -17,17 +16,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-public class PrimaryController {
+public class DataEntryController {
     @FXML
     private TextField ageTextField;
 
     @FXML
     private TextField nameTextField;
+    @FXML
+    private TextField phoneNumnerTextfield;
 
     @FXML
     private TextArea outputTextArea;
@@ -64,13 +64,6 @@ public class PrimaryController {
     void readButtonClicked(ActionEvent event) {
         readFirebase();
     }
-
-    @FXML
-    void registerButtonClicked(ActionEvent event) {
-        registerUser();
-    }
-
-
     @FXML
     void writeButtonClicked(ActionEvent event) {
         addData();
@@ -78,7 +71,7 @@ public class PrimaryController {
 
     @FXML
     private void switchToSecondary() throws IOException {
-        DemoApp.setRoot("secondary");
+        DemoApp.switchScene("Login.fxml", 500,300);
     }
     public boolean readFirebase()
     {
@@ -93,15 +86,17 @@ public class PrimaryController {
             documents = future.get().getDocuments();
             if(documents.size()>0)
             {
-                System.out.println("Getting (reading) data from firabase database....");
+                System.out.println("Getting (reading) data from firebase database....");
                 listOfUsers.clear();
                 for (QueryDocumentSnapshot document : documents)
                 {
                     outputTextArea.setText(outputTextArea.getText()+ document.getData().get("Name")+ " , Age: "+
-                            document.getData().get("Age")+ " \n ");
+                            document.getData().get("Age")+ " , Phone Number: "+
+                            document.getData().get("Phone Number")+ " \n ");
                     System.out.println(document.getId() + " => " + document.getData().get("Name"));
                     person  = new Person(String.valueOf(document.getData().get("Name")),
-                            Integer.parseInt(document.getData().get("Age").toString()));
+                            Integer.parseInt(document.getData().get("Age").toString()),
+                            String.valueOf(document.getData().get("Phone Number")));
                     listOfUsers.add(person);
                 }
             }
@@ -119,30 +114,6 @@ public class PrimaryController {
         return key;
     }
 
-    public boolean registerUser() {
-        UserRecord.CreateRequest request = new UserRecord.CreateRequest()
-                .setEmail("user222@example.com")
-                .setEmailVerified(false)
-                .setPassword("secretPassword")
-                .setPhoneNumber("+11234567890")
-                .setDisplayName("John Doe")
-                .setDisabled(false);
-
-        UserRecord userRecord;
-        try {
-            userRecord = DemoApp.fauth.createUser(request);
-            System.out.println("Successfully created new user with Firebase Uid: " + userRecord.getUid()
-            + " check Firebase > Authentication > Users tab");
-            return true;
-
-        } catch (FirebaseAuthException ex) {
-            // Logger.getLogger(FirestoreContext.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Error creating a new user in the firebase");
-            return false;
-        }
-
-    }
-
     public void addData() {
 
         DocumentReference docRef = DemoApp.fstore.collection("Persons").document(UUID.randomUUID().toString());
@@ -150,8 +121,12 @@ public class PrimaryController {
         Map<String, Object> data = new HashMap<>();
         data.put("Name", nameTextField.getText());
         data.put("Age", Integer.parseInt(ageTextField.getText()));
+        data.put("Phone Number", phoneNumnerTextfield.getText());
 
         //asynchronously write data
         ApiFuture<WriteResult> result = docRef.set(data);
+        nameTextField.clear();
+        ageTextField.clear();
+        phoneNumnerTextfield.clear();
     }
 }

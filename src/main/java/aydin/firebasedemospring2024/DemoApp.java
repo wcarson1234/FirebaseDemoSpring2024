@@ -28,6 +28,7 @@ import java.io.IOException;
 
 public class DemoApp extends Application {
     public static Scene scene;
+    private static Stage primaryStage;
 
     public static Firestore fstore;
     public static FirebaseAuth fauth;
@@ -38,7 +39,8 @@ public class DemoApp extends Application {
         fstore = contxtFirebase.firebase();
         fauth = FirebaseAuth.getInstance();
 
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        primaryStage = stage;
+        scene = new Scene(loadFXML("Login"), 500,300);
         stage.setScene(scene);
         stage.show();
     }
@@ -47,9 +49,22 @@ public class DemoApp extends Application {
         scene.setRoot(loadFXML(fxml));
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
+    static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(DemoApp.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
+    }
+    public static void switchScene(String fxmlPath, double width, double height) {
+        FXMLLoader loader = new FXMLLoader(DemoApp.class.getResource(fxmlPath));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Scene scene = new Scene(root, width, height);
+        primaryStage.setScene(scene);
+        primaryStage.setWidth(width);
+        primaryStage.setHeight(height);
     }
 
     public static void main(String[] args) {

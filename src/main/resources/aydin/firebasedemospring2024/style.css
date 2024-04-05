@@ -1,0 +1,27 @@
+
+
+.button-7 {
+    -fx-background-color: #0095ff;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.button-7:hover,
+.button-7:focus {
+    background-color: #07c;
+}
+
+.button-7:focus {
+    box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+}
+
+.button-7:active {
+    background-color: #0064bd;
+    box-shadow: none;
+}
+
+

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane style="-fx-background-color: #0064BDFF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aydin.firebasedemospring2024.DataEntryController">
+    <children>
+        <VBox alignment="CENTER" prefHeight="600.0" prefWidth="600.0" spacing="20.0">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <children>
+                <Label text="Enter New Contact Information:" textFill="#f2f2f2">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font></Label>
+                <TextField fx:id="nameTextField" promptText="name" />
+                <TextField fx:id="ageTextField" promptText="age" />
+                <TextField fx:id="phoneNumnerTextfield" promptText="phone number" />
+                <HBox alignment="TOP_CENTER" prefHeight="55.0" prefWidth="518.0" spacing="10.0">
+                    <children>
+                        <Button fx:id="writeButton" mnemonicParsing="false" onAction="#writeButtonClicked" prefHeight="42.0" prefWidth="158.0" styleClass="button-7" stylesheets="@style.css" text="Add New Contact" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="23.0" prefWidth="560.0">
+                    <children>
+                        <Label text="Contacts:" textFill="#f2f2f2">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <TextArea fx:id="outputTextArea" prefHeight="292.0" prefWidth="560.0" />
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Button fx:id="readButton" mnemonicParsing="false" onAction="#readButtonClicked" prefHeight="42.0" prefWidth="157.0" styleClass="button-7" stylesheets="@style.css" text="Display Contacts" />
+                        <Button fx:id="switchSecondaryViewButton" alignment="CENTER" onAction="#switchToSecondary" prefHeight="42.0" prefWidth="121.0" styleClass="button-7" stylesheets="@style.css" text="Logout">
+                            <HBox.margin>
+                                <Insets left="290.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
